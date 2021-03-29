@@ -6,7 +6,8 @@
   "scripts": {
     "dev:server": "nodemon --exec babel-node src/server.js",
     "migrate:up": "npx sequelize-cli db:migrate",
-    "migrate:drop": "npx sequelize-cli db:migrate:undo:all"
+    "migrate:drop": "npx sequelize-cli db:migrate:undo:all",
+    "migrate": "npm run migrate:drop && npm run migrate:up"
   },
   "repository": {
     "type": "git",
