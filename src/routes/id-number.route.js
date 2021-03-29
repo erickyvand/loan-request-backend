@@ -1,8 +1,12 @@
 import { Router } from 'express';
 import IdNumberController from '../controllers/id-number.controller';
-import { checkIdNumberExists } from '../middlewares/id-number.middleware';
+import {
+	checkIdNumberExists,
+	findIdNumberExists,
+} from '../middlewares/id-number.middleware';
 import {
 	validateIdNumberBody,
+	validateIdNumberParam,
 	validateProfilePicture,
 } from '../validations/id-number.validation';
 
@@ -14,6 +18,12 @@ router.post(
 	validateProfilePicture,
 	checkIdNumberExists,
 	IdNumberController.createIdentifation
+);
+router.get(
+	'/:idNumber',
+	validateIdNumberParam,
+	findIdNumberExists,
+	IdNumberController.getIdentication
 );
 
 export default router;

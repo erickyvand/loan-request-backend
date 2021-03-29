@@ -20,3 +20,18 @@ export const checkTinAndId = async (req, res, next) => {
 
 	next();
 };
+
+export const findTinNumberExists = async (req, res, next) => {
+	const { tinNumber } = req.params;
+	const tinInfo = await TinNumberService.findTinByProperty({ tinNumber });
+
+	if (!tinInfo) {
+		ResponseService.setError(
+			NOT_FOUND,
+			'The provided TIN number does not exists'
+		);
+		return ResponseService.send(res);
+	}
+	req.tinInfo = tinInfo;
+	next();
+};

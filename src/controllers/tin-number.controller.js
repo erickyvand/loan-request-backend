@@ -1,4 +1,4 @@
-import { CREATED } from 'http-status';
+import { CREATED, OK } from 'http-status';
 import ResponseService from '../services/response.service';
 import TinNumberService from '../services/tin-number.service';
 
@@ -16,6 +16,11 @@ class TinNumberController {
 		const tinInfo = await TinNumberService.createTin(req.body);
 
 		ResponseService.setSuccess(CREATED, 'TIN Info', tinInfo);
+		return ResponseService.send(res);
+	}
+
+	static async getTinNumberInfo(req, res) {
+		ResponseService.setSuccess(OK, 'TIN Info', req.tinInfo);
 		return ResponseService.send(res);
 	}
 }
