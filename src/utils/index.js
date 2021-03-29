@@ -22,7 +22,7 @@ export const handleErrors = (schema, req, res, next) => {
 		const errors = error.details.map(err => err.message);
 		ResponseService.setError(BAD_REQUEST, errors);
 		return ResponseService.send(res);
-  }
+	}
 
 	next();
 };
@@ -72,4 +72,38 @@ export const idNumberschema = Joi.object({
 		'string.min': 'Place of birth length must be at least 4 characters long',
 	}),
 	picture: Joi.string(),
+}).options({ abortEarly: false });
+
+export const tinNumberSchema = Joi.object({
+	tinNumber: Joi.string()
+		.regex(/^[0-9]{9}$/)
+		.required()
+		.messages({
+			'string.pattern.base': 'TIN Number must be a number with 9 digit',
+			'any.required': 'TIN Number is required',
+			'string.empty': 'TIN Number is not allowed to be empty',
+		}),
+	idNumber: Joi.string()
+		.regex(/^[0-9]{16}$/)
+		.required()
+		.messages({
+			'string.pattern.base': 'Id Number must be a number with 16 digit',
+			'any.required': 'Id Number is required',
+			'string.empty': 'Id Number is not allowed to be empty',
+		}),
+	email: Joi.string().trim().email().required().messages({
+		'any.required': 'Email is required',
+		'string.email': 'Email must be a valid email',
+		'string.empty': 'Email is not allowed to be empty',
+	}),
+	companyName: Joi.string().trim().min(4).required().messages({
+		'any.required': 'Company Name is required',
+		'string.empty': 'Company Name is not allowed to be empty',
+		'string.min': 'Company Name length must be at least 4 characters long',
+	}),
+	address: Joi.string().trim().min(4).required().messages({
+		'any.required': 'Address is required',
+		'string.empty': 'Address is not allowed to be empty',
+		'string.min': 'Address length must be at least 4 characters long',
+	}),
 }).options({ abortEarly: false });

@@ -8,15 +8,17 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			// define association here
+			Tin.belongsTo(models.Nid, {
+				foreignKey: 'idNumber',
+				targetKey: 'idNumber',
+			});
 		}
 	}
 	Tin.init(
 		{
 			tinNumber: DataTypes.BIGINT,
-			idNumber: DataTypes.INTEGER,
-			names: DataTypes.STRING,
+			idNumber: DataTypes.BIGINT,
 			email: DataTypes.STRING,
-			phoneNumber: DataTypes.STRING,
 			companyName: DataTypes.STRING,
 			address: DataTypes.STRING,
 		},

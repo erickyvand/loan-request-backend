@@ -8,6 +8,11 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			// define association here
+			Nid.hasOne(models.Tin, {
+				foreignKey: 'idNumber',
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
+			});
 		}
 	}
 	Nid.init(

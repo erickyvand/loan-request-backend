@@ -10,15 +10,9 @@ export async function up(queryInterface, Sequelize) {
 			type: Sequelize.BIGINT,
 		},
 		idNumber: {
-			type: Sequelize.INTEGER,
-		},
-		names: {
-			type: Sequelize.STRING,
+			type: Sequelize.BIGINT,
 		},
 		email: {
-			type: Sequelize.STRING,
-		},
-		phoneNumber: {
 			type: Sequelize.STRING,
 		},
 		companyName: {
