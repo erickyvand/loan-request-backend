@@ -1,6 +1,6 @@
 import { BAD_REQUEST } from 'http-status';
 import ResponseService from '../services/response.service';
-import { handleErrors, idNumberschema } from '../utils';
+import { handleErrors, idNumberschema, idParamSchema } from '../utils';
 
 export const validateIdNumberBody = (req, res, next) => {
 	return handleErrors(idNumberschema, req.body, res, next);
@@ -38,3 +38,7 @@ export const validateProfilePicture = (req, res, next) => {
 
 	next();
 };
+
+export const validateIdNumberParam = (req, res, next) => {
+	return handleErrors(idParamSchema, req.params, res,next)
+}

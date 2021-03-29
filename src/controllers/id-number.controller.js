@@ -1,4 +1,4 @@
-import { CREATED } from 'http-status';
+import { CREATED, OK } from 'http-status';
 import IdNumberService from '../services/id-number.service';
 import ResponseService from '../services/response.service';
 
@@ -22,6 +22,11 @@ class IdNumberController {
 		});
 
 		ResponseService.setSuccess(CREATED, 'ID Info', idInfo);
+		return ResponseService.send(res);
+	}
+
+	static async getIdentication(req, res) {
+		ResponseService.setSuccess(OK, 'ID Info', req.idInfo);
 		return ResponseService.send(res);
 	}
 }

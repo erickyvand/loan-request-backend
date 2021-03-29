@@ -74,6 +74,7 @@ export const idNumberschema = Joi.object({
 	picture: Joi.string(),
 }).options({ abortEarly: false });
 
+// TIN number schema
 export const tinNumberSchema = Joi.object({
 	tinNumber: Joi.string()
 		.regex(/^[0-9]{9}$/)
@@ -107,3 +108,23 @@ export const tinNumberSchema = Joi.object({
 		'string.min': 'Address length must be at least 4 characters long',
 	}),
 }).options({ abortEarly: false });
+
+// ID number param schema
+export const idParamSchema = Joi.object({
+	idNumber: Joi.string()
+		.regex(/^[0-9]{1,}$/)
+		.required()
+		.messages({
+			'string.pattern.base': 'Id Number must be a number'
+		}),
+});
+
+// TIN number param schema
+export const tinParamSchema = Joi.object({
+	tinNumber: Joi.string()
+		.regex(/^[0-9]{1,}$/)
+		.required()
+		.messages({
+			'string.pattern.base': 'TIN Number must be a number'
+		}),
+});
