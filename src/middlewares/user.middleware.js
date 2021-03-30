@@ -16,17 +16,14 @@ export const checkUserExists = async (req, res, next) => {
 
 export const checkUserCredentials = async (req, res, next) => {
 	const { email, password } = req.body;
-	const { dataValues } = await UserService.findUserByProperty({ email });
+	const user = await UserService.findUserByProperty({ email });
 
-	if (
-		!dataValues ||
-		!BcryptService.comparePassword(password, dataValues.password)
-	) {
+	if (!user || !BcryptService.comparePassword(password, user.password)) {
 		ResponseService.setError(UNAUTHORIZED, 'Invalid email or password');
 		return ResponseService.send(res);
 	}
 
-	const userData = { ...dataValues };
+	const userData = { ...user.dataValues };
 	delete userData.password;
 
 	req.userData = userData;

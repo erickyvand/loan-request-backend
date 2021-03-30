@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import { CONFLICT, NOT_FOUND } from 'http-status';
 import IdNumberService from '../services/id-number.service';
 import ResponseService from '../services/response.service';
@@ -23,7 +24,9 @@ export const checkTinAndId = async (req, res, next) => {
 
 export const findTinNumberExists = async (req, res, next) => {
 	const { tinNumber } = req.params;
-	const tinInfo = await TinNumberService.findTinByProperty({ tinNumber });
+	const tinInfo = await TinNumberService.findTinByProperty({
+		[Op.or]: { tinNumber, idNumber: tinNumber },
+	});
 
 	if (!tinInfo) {
 		ResponseService.setError(

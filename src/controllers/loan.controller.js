@@ -34,7 +34,7 @@ class Loancontroller {
 
 		ResponseService.setSuccess(
 			CREATED,
-			'Load request successfully created',
+			'Loan request successfully created',
 			clientInfo
 		);
 		return ResponseService.send(res);
