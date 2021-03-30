@@ -20,7 +20,27 @@ class TinNumberController {
 	}
 
 	static async getTinNumberInfo(req, res) {
-		ResponseService.setSuccess(OK, 'TIN Info', req.tinInfo);
+		const {
+			idNumber,
+			tinNumber,
+			email,
+			companyName,
+			address,
+			Nid,
+		} = req.tinInfo;
+		const { firstName, lastName, phoneNumber, picture } = Nid;
+
+		ResponseService.setSuccess(OK, 'TIN Info', {
+			idNumber,
+			tinNumber,
+			firstName,
+			lastName,
+			email,
+			phoneNumber,
+			companyName,
+			address,
+			picture,
+		});
 		return ResponseService.send(res);
 	}
 }
