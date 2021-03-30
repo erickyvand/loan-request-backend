@@ -21,7 +21,7 @@ class TinNumberService {
 			where: property,
 			include: {
 				model: Nid,
-				attributes: ['id', 'firstName', 'lastName', 'phoneNumber'],
+				attributes: ['id', 'firstName', 'lastName', 'phoneNumber', 'picture'],
 			},
 		});
 	}

@@ -115,7 +115,7 @@ export const idParamSchema = Joi.object({
 		.regex(/^[0-9]{1,}$/)
 		.required()
 		.messages({
-			'string.pattern.base': 'Id Number must be a number'
+			'string.pattern.base': 'Id Number must be a number',
 		}),
 });
 
@@ -125,6 +125,57 @@ export const tinParamSchema = Joi.object({
 		.regex(/^[0-9]{1,}$/)
 		.required()
 		.messages({
-			'string.pattern.base': 'TIN Number must be a number'
+			'string.pattern.base': 'TIN Number must be a number',
 		}),
 });
+
+// Register schema
+export const registerSchema = Joi.object({
+	firstName: Joi.string().trim().required().min(2).messages({
+		'any.required': 'First Name is required',
+		'string.empty': 'First Name is not allowed to be empty',
+		'string.min': 'First Name length must be at least 2 characters long',
+	}),
+	lastName: Joi.string().trim().required().min(2).messages({
+		'any.required': 'Last Name is required',
+		'string.empty': 'Last Name is not allowed to be empty',
+		'string.min': 'Last Name length must be at least 2 characters long',
+	}),
+	email: Joi.string().trim().email().required().messages({
+		'any.required': 'Email is required',
+		'string.email': 'Email must be a valid email',
+		'string.empty': 'Email is not allowed to be empty',
+	}),
+	password: Joi.string().trim().required().min(6).messages({
+		'any.required': 'Password is required',
+		'string.min': 'Password length must be at least 6 characters long',
+		'string.empty': 'Password is not allowed to be empty',
+	}),
+	confirmPassword: Joi.string().required().valid(Joi.ref('password')).messages({
+		'any.required': 'Confirm Password is required',
+		'any.only': 'Passwords must match',
+		'string.empty': 'Confirm Password is not allowed to be empty',
+	}),
+}).options({ abortEarly: false });
+
+// Login schema
+export const loginSchama = Joi.object({
+	email: Joi.string().email().required().messages({
+		'any.required': 'Email is required',
+		'string.email': 'Email must be a valid email',
+		'string.empty': 'Email is not allowed to be empty',
+	}),
+	password: Joi.string().required().messages({
+		'any.required': 'Password is required',
+		'string.empty': 'Password is not allowed to be empty',
+	}),
+}).options({ abortEarly: false });
+
+// Loan schema
+export const loanSchema = Joi.object({
+	inputNumber: Joi.string().required().messages({
+		'any.required': 'Input Number is required',
+		'string.empty': 'Input Number is not allowed to be empty',
+	}),
+	file: Joi.string(),
+}).options({ abortEarly: false });
