@@ -8,14 +8,14 @@ export const validateIdNumberBody = (req, res, next) => {
 
 export const validateProfilePicture = (req, res, next) => {
 	if (!req.files) {
-		ResponseService.setError(400, 'Please select a picture');
+		ResponseService.setError(BAD_REQUEST, 'Please select a picture');
 		return ResponseService.send(res);
 	}
 
 	const { picture } = req.files;
 	
 	if (picture === undefined) {
-		ResponseService.setError(400, 'Check if the field name is picture');
+		ResponseService.setError(BAD_REQUEST, 'Check if the field name is picture');
 		return ResponseService.send(res);
 	}
 
