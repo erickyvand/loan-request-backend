@@ -179,3 +179,13 @@ export const loanSchema = Joi.object({
 	}),
 	file: Joi.string(),
 }).options({ abortEarly: false });
+
+// Request schema
+export const requestSchema = Joi.object({
+	requestId: Joi.string()
+		.regex(/^[0-9]{1,}$/)
+		.required()
+		.messages({
+			'string.pattern.base': 'Loan Request ID must be a number',
+		}),
+}).options({ abortEarly: false });

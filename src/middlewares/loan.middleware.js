@@ -1,5 +1,10 @@
 import { Op } from 'sequelize';
-import { CONFLICT, INTERNAL_SERVER_ERROR, NOT_FOUND } from 'http-status';
+import {
+	CONFLICT,
+	INTERNAL_SERVER_ERROR,
+	NOT_FOUND,
+	UNAUTHORIZED,
+} from 'http-status';
 import ResponseService from '../services/response.service';
 import TinNumberService from '../services/tin-number.service';
 import LoanService from '../services/loan.service';
@@ -27,7 +32,14 @@ export const checkClientInfo = async (req, res, next) => {
 };
 
 export const checkPendingLoan = async (req, res, next) => {
-	const request = await LoanService.findLoanByProperty({ status: 'pending' });
+	const { inputNumber } = req.body;
+	const request = await LoanService.findLoanByProperty({
+		[Op.or]: {
+			tinNumber: inputNumber,
+			idNumber: inputNumber,
+		},
+		status: 'pending',
+	});
 
 	if (request) {
 		ResponseService.setError(
@@ -36,5 +48,32 @@ export const checkPendingLoan = async (req, res, next) => {
 		);
 		return ResponseService.send(res);
 	}
+	next();
+};
+
+export const checkUserRole = async (req, res, next) => {
+	if (req.userData.role === 'client') {
+		ResponseService.setError(
+			UNAUTHORIZED,
+			'Unauthorized, You can not access this route'
+		);
+		return ResponseService.send(res);
+	}
+
+	next();
+};
+
+export const checkRequestExists = async (req, res, next) => {
+	const { requestId } = req.params;
+	const request = await LoanService.findLoanByProperty({ id: requestId });
+
+	if (!request) {
+		ResponseService.setError(
+			NOT_FOUND,
+			'The request you are trying to access does not exists'
+		);
+		return ResponseService.send(res);
+	}
+
 	next();
 };
