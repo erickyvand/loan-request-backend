@@ -1,6 +1,6 @@
 import { BAD_REQUEST } from 'http-status';
 import ResponseService from '../services/response.service';
-import { handleErrors, loanSchema } from '../utils';
+import { handleErrors, loanSchema, requestSchema } from '../utils';
 
 export const validateLoanBody = (req, res, next) => {
 	return handleErrors(loanSchema, req.body, res, next);
@@ -30,4 +30,8 @@ export const validateFiles = (req, res, next) => {
 	}
 
 	next();
+};
+
+export const validateRequestParam = (req, res, next) => {
+	return handleErrors(requestSchema, req.params, res, next);
 };
